@@ -17,6 +17,10 @@ app.get('/api/route', (req, res) => {
   res.json(dummyData);
 });
 
+app.get('/', (req, res) => { 
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+ })
+
 // API to get current location
 let currentIndex = 0;
 app.get('/api/current-location', (req, res) => {
