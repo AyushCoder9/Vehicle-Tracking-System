@@ -1,26 +1,31 @@
+// backend/server.js
 const express = require('express');
 const cors = require('cors');
-const app = express();
 const path = require('path');
-const port = 3000;
+const app = express();
+const port = process.env.PORT || 3000;
 
-const dummyData = require('./dummyData.json');
+const dummyData = require('./dummyData.json'); // Make sure this path is correct
 
 app.use(cors());
+
+// Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, '../public')));
 
-let currentIndex = 0;
-
+// API to get the route data
 app.get('/api/route', (req, res) => {
   res.json(dummyData);
 });
 
+// API to get current location
+let currentIndex = 0;
 app.get('/api/current-location', (req, res) => {
   const data = dummyData[currentIndex];
   currentIndex = (currentIndex + 1) % dummyData.length;
   res.json(data);
 });
 
+// Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
